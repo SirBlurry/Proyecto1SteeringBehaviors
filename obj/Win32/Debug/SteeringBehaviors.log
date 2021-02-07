@@ -1,17 +1,9 @@
-﻿  agent.cpp
-  main.cpp
-  ofApp.cpp
-  sBehaviours.cpp
-  vector2.cpp
-D:\C++\SteeringBehaviors\src\vector2.cpp(15,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-     Creating library bin\SteeringBehaviors_debug.lib and object bin\SteeringBehaviors_debug.exp
+﻿  ofApp.cpp
   SteeringBehaviors.vcxproj -> D:\C++\SteeringBehaviors\bin\SteeringBehaviors_debug.exe
   
   	                   2	D:\OpenFrameworks\of_v0.11.0_vs2017_release\libs\fmodex\lib\vs\Win32\
-  	    Nuevo arch		 1266176	D:\OpenFrameworks\of_v0.11.0_vs2017_release\libs\fmodex\lib\vs\Win32\fmodex.dll
-  	    Nuevo arch		 1312768	D:\OpenFrameworks\of_v0.11.0_vs2017_release\libs\fmodex\lib\vs\Win32\fmodexL.dll
+  	  *Archivo EXTRA		 6018560	D:\C++\SteeringBehaviors\bin\FreeImage.dll
   
   	                   1	D:\OpenFrameworks\of_v0.11.0_vs2017_release\libs\FreeImage\lib\vs\Win32\
   	  *Archivo EXTRA		 1266176	D:\C++\SteeringBehaviors\bin\fmodex.dll
   	  *Archivo EXTRA		 1312768	D:\C++\SteeringBehaviors\bin\fmodexL.dll
-  	    Nuevo arch		 6018560	D:\OpenFrameworks\of_v0.11.0_vs2017_release\libs\FreeImage\lib\vs\Win32\FreeImage.dll

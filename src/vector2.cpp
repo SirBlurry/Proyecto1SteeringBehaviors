@@ -84,3 +84,13 @@ Sobrecarga del operador - resta de dos vectores
 vector2 vector2::operator-(vector2 const& v1) {
 	return vector2(x - v1.x, y - v1.y);
 }
+
+/*
+Sobrecarga del operador -= resta de dos vectores
+*/
+vector2& vector2::operator-=(vector2 const& v1)
+{
+	this->x -= v1.x;
+	this->y -= v1.y;
+	return *this;
+}

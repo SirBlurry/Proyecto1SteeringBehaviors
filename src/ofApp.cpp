@@ -1,7 +1,7 @@
 #include "ofApp.h"
 
-vector2 v1(64, 64), v2(0, 0);
-Agent a(v1, vector2(0, 0), 15, 20), t;
+vector2 v1(800, 450), v2(0, 0);
+Agent a(v1, vector2(0, 0), 5, 20), t;
 sBehaviours sb;
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -13,7 +13,8 @@ void ofApp::update() {
 	v2.x = ofGetMouseX();
 	v2.y = ofGetMouseY();
 	t.position = v2;
-	sb.seek(&a, &t);
+	sb.flee(&a, &t);
+	//sb.seek(&a, &t);
 	//a.position = vector2::suma(a.position, a.velocity);
 }
 

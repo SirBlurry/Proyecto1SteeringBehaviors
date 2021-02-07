@@ -27,6 +27,7 @@ class vector2
 		vector2 operator+(vector2 const &v1);
 		vector2& operator+=(vector2 const& v1);
 		vector2 operator-(vector2 const& v1);
+		vector2& operator-=(vector2 const& v1);
 
 		static vector2 truncar(vector2, float);
 		static vector2 resta(vector2 v1, vector2 v2);
