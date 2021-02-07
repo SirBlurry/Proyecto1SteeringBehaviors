@@ -1,4 +1,4 @@
-
+.vs
 .vs/Proyecto1SteeringBehaviors/v16/Browse.VC.db
 .vs/Proyecto1SteeringBehaviors/v16/Browse.VC.opendb
 .vs/Proyecto1SteeringBehaviors/v16/Solution.VC.db
@@ -6,3 +6,5 @@
 .vs/Proyecto1SteeringBehaviors/v16/Solution.VC.db-wal
 .vs/Proyecto1SteeringBehaviors/v16/ipch/AutoPCH/7821f54c2313540f/BBEHAVIORS.ipch
 .vs/Proyecto1SteeringBehaviors/v16/ipch/AutoPCH/cc22652579e8945f/MAIN.ipch
+bin
+obj
