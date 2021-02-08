@@ -1,14 +1,11 @@
 #pragma once
-//#include "ofMain.h"
 #include <ofAppRunner.h>
-#include "vector2.h"
 #include "Radar.h"
-#include <list>
 #include <iostream>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
-using std::list; using std::cout; using std::endl;
+using std::cout; using std::endl;
 
 class Agent {
 	private:
@@ -23,7 +20,7 @@ class Agent {
 					displacement = vector2(rand() % 101 - 50, rand() % 101 - 50);
 				}
 				void wander(Agent*, float, time_t*);
-				void arrival(Agent*, Agent*);
+				void arrival(Agent*, Agent*, float);
 				void seek(Agent*, Agent*);
 				void flee(Agent*, Agent*);
 		};
@@ -41,4 +38,9 @@ class Agent {
 		Agent() {}
 		Agent(vector2, vector2, float, float);
 		Agent(vector2, vector2, vector2, float, float, float);
+		Agent(vector2, vector2, float, float, vector2, float);
+		Agent(vector2, vector2, vector2, float, float, float, vector2, float);
+		vector2& radarCenter();
+		void setRadarRadius(float);
+		float getRadarRadius();
 };

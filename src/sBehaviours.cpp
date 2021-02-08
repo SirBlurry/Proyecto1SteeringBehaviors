@@ -3,10 +3,16 @@
 
 void Agent::sBehaviours::wander(Agent* self, float vista, time_t* deltaTime) {
 	int rango = 1000;
-	vector2 guide = self->velocity;
+	self->setRadarRadius(vista);
+	self->radarCenter() = self->velocity;
+	self->radarCenter().normalizar();
+	self->radarCenter().multiEscalar(vista);
+	self->radarCenter() += self->position;
+
+	/*vector2 guide = self->velocity;
 	guide.normalizar();
 	guide.multiEscalar(vista);
-	guide += self->position;
+	guide += self->position;*/
 	if (*deltaTime == 1) canChange = true;
 	if ((*deltaTime == 0 && canChange) || self->doIt) {
 		displacement = vector2((rand() % (rango * 2 + 1)) - rango, (rand() % (rango * 2 + 1)) - rango);
@@ -14,8 +20,10 @@ void Agent::sBehaviours::wander(Agent* self, float vista, time_t* deltaTime) {
 		canChange = false;
 		if(self->doIt) self->doIt = false;
 	}
-	self->Displ = guide;
-	vector2 steering = guide + displacement;
+	self->Displ = self->radarCenter();
+	vector2 steering = self->radarCenter() + displacement;
+	/*self->Displ = guide;
+	vector2 steering = guide + displacement;*/
 	//cout << "steer: " << steering.x << ", " << steering.y << endl;
 	steering = vector2::truncar(steering, self->maxForce.getMagnitud());
 	steering.dividirEscalar(self->mass);
@@ -24,18 +32,24 @@ void Agent::sBehaviours::wander(Agent* self, float vista, time_t* deltaTime) {
 	self->position += self->velocity;
 }
 
-void Agent::sBehaviours::arrival(Agent* owner, Agent* target)
+void Agent::sBehaviours::arrival(Agent* owner, Agent* target, float slowArea)
 {
-	owner->radar->center = target->position;
-	owner->radar->radius = 100.0f;
+	vector2 firstCenter = owner->radarCenter();
+	float firstRad = owner->getRadarRadius();
+
+	owner->radarCenter() = target->position;
+	owner->setRadarRadius(slowArea);
+
 	vector2 desired_vel = target->position - owner->position;
 	vector2 slowLimit = target->position - owner->position;
 	float agentMaxVel = owner->maxVel;
 	desired_vel.normalizar();
 	/*if (slowLimit.getMagnitud() < owner->radar->radius)*/
-	if (owner->radar->detect(slowLimit))
+	if (owner->radar->detect(target->position, target->radious))
 	{
-		desired_vel.multiEscalar(agentMaxVel * (desired_vel.getMagnitud() / owner->radar->radius));
+		desired_vel.multiEscalar(agentMaxVel * (slowLimit.getMagnitud() / slowArea));
+		owner->radarCenter() = firstCenter;
+		owner->setRadarRadius(firstRad);
 	}
 	else
 	{

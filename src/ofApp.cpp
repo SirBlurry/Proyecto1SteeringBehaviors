@@ -8,8 +8,8 @@ time_t oldTime, deltaTime;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	g = Greedy(400, vector2(264, 264), vector2(), vector2(3, 3), 4, 20, 20);
-	target = Agent(vector2(264, 264), vector2(0, 0), vector2(0, 0), 15, 20, 20);
+	g = Greedy(120, vector2(264, 264), vector2(), vector2(3, 3), 2, 20, 20);
+	target = Agent(vector2(264, 264), vector2(0, 0), vector2(0, 0), 15, 200, 200);
 	agents.push_back(&target);
 	agents.push_back(&g);
 	ofSetRectMode(OF_RECTMODE_CENTER);
@@ -32,9 +32,10 @@ void ofApp::draw(){
 	ofSetColor(0, 0, 0, 40);
 	ofDrawCircle(g.Displ.x, g.Displ.y, g.perceptionRadious);
 	ofSetColor(220, 220, 220);
+	//ofDrawTriangle(g.velocity.x, g.velocity.x, g.position.x, g.position.y, g.velocity.y, g.velocity.y);
 	ofDrawRectangle(g.position.x, g.position.y, 64, 64);
 	ofDrawCircle(target.position.x, target.position.y, target.radious);
-	g.radar->drawRadar(target.position);
+	g.radar->drawRadar(g.radarCenter());
 }
 
 //--------------------------------------------------------------

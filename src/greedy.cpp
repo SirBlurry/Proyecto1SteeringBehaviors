@@ -9,13 +9,13 @@ void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
 			Agent::sb->seek(this, ag);
 			return;
 		}*/
-		if ((ag != this) && perception(ag))
+		if ((ag != this) && this->radar->detect(ag->position, ag->radious)/*perception(ag)*/)
 		{
-			Agent::sb->arrival(this, ag);
+			Agent::sb->arrival(this, ag, 80);
 			return;
 		}
 	}
-	sb->wander(this, 100, deltaTime);
+	sb->wander(this, 120, deltaTime);
 	Agent::doIt = Agent::limits();
 }
 
@@ -23,7 +23,7 @@ bool Greedy::perception(Agent* trgt)
 {
 	vector2 view = velocity;
 	view.normalizar();
-	view.multiEscalar(100);
+	view.multiEscalar(120);
 	view += position;
 
 	bool viewed = (trgt->position - view).getMagnitud() < perceptionRadious + trgt->radious;

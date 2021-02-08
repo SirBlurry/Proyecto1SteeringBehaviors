@@ -7,6 +7,7 @@ using std::list;
 
 class Radar
 {
+private:
 public:
 	float radius = 0.0f;
 	vector2 center = vector2(0, 0);
@@ -14,6 +15,6 @@ public:
 	Radar() {}
 	Radar(float rad) : radius(rad) {}
 	Radar(vector2 owner, float rad) : center(owner), radius(rad) {}
-	bool detect(vector2);
+	bool detect(vector2, float);
 	void drawRadar(vector2);
 };

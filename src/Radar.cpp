@@ -1,8 +1,8 @@
 #include "Radar.h"
 
-bool Radar::detect(vector2 object)
+bool Radar::detect(vector2 object, float objRadius)
 {
-	if (object.getMagnitud() < radius) { return true; }
+	if ((object - center).getMagnitud() < radius + objRadius) { return true; }
 	return false;
 }
 
