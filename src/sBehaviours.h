@@ -1,11 +1,13 @@
 #pragma once
-#include "agent.h"
+//#include "agent.h"
 
-class sBehaviours {
-	public:
-		void seek(Agent*, Agent*);
-		void flee(Agent*, Agent*);
-		sBehaviours() {}
-};
+//class sBehaviours {
+//	private:
+//	public:
+//		class Agent;
+//		void seek(Agent*, Agent*);
+//		sBehaviours() {}
+//};
+
 
 

@@ -19,6 +19,11 @@ void vector2::generarMagnitud() {
 Normaliza el vector
 */
 void vector2::normalizar() {
+	if (magnitud == 0) {
+		x = 0;
+		y = 0;
+		return;
+	}
 	x = x / magnitud;
 	y = y / magnitud;
 	generarMagnitud();
@@ -72,6 +77,15 @@ vector2& vector2::operator+=(vector2 const& v1) {
 }
 
 /*
+Sobrecarga del operador += suma de dos vectores
+*/
+vector2& vector2::operator-=(vector2 const& v1) {
+	this->x -= v1.x;
+	this->y -= v1.y;
+	return *this;
+}
+
+/*
 Resta de dos vectores
 */
 vector2 vector2::resta(vector2 v1, vector2 v2) {
@@ -83,14 +97,4 @@ Sobrecarga del operador - resta de dos vectores
 */
 vector2 vector2::operator-(vector2 const& v1) {
 	return vector2(x - v1.x, y - v1.y);
-}
-
-/*
-Sobrecarga del operador -= resta de dos vectores
-*/
-vector2& vector2::operator-=(vector2 const& v1)
-{
-	this->x -= v1.x;
-	this->y -= v1.y;
-	return *this;
 }
