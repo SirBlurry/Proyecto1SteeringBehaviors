@@ -12,8 +12,8 @@ public:
 		perceptionRadious = p;
 		Agent::maxForce = mf;
 	}
-	Greedy(float prcptn, vector2 pos, vector2 vel, vector2 maxFrc, float maxV, float mss, float r) :
-		perceptionRadious(prcptn), Agent(pos, vel, maxFrc, maxV, mss, r) {}
+	Greedy(float prcptn, vector2 pos, vector2 vel, vector2 maxFrc, float maxV, float mss, float r, float w, float h) :
+		perceptionRadious(prcptn), Agent(pos, vel, maxFrc, maxV, mss, r, w, h) {}
 	void manager(list<Agent*>&, time_t*);
 	bool perception(Agent*);
 };

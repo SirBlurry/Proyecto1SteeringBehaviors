@@ -1,40 +1,59 @@
 #include "agent.h"
 
 
+Agent::Agent(vector2 pos, float w, float h)
+{
+	position = pos;
+	width = w;
+	height = h;
+}
+
 /**
 * @brief (posición, velocidad, maxVel, masa)
 */
-Agent::Agent(vector2 pos, vector2 vel, float maxV, float mss) {
+Agent::Agent(vector2 pos, vector2 vel, float maxV, float mss, float w, float h) {
 	position = pos;
 	velocity = vel;
 	maxVel = maxV;
 	mass = mss;
+	width = w;
+	height = h;
+	getDistanceX();
+	getDistanceY();
+	getLenght();
 	//sb = sBehaviours();
 }
 
 /**
 * @brief (posición, velocidad, maxForce, maxVel, masa)
 */
-Agent::Agent(vector2 pos, vector2 vel, vector2 mF, float maxV, float mss, float r) {
+Agent::Agent(vector2 pos, vector2 vel, vector2 mF, float maxV, float mss, float r, float w, float h) {
 	position = pos;
 	velocity = vel;
 	maxForce = mF;
 	maxVel = maxV;
 	radious = r;
 	mass = r / 3;
+	width = w;
+	height = h;
+	getDistanceX();
+	getDistanceY();
+	getLenght();
 }
 
-Agent::Agent(vector2 pos, vector2 vel, float maxV, float mss, vector2 radCenter, float radR)
+Agent::Agent(vector2 pos, vector2 vel, float maxV, float mss, float w, float h, vector2 radCenter, float radR)
 {
 	position = pos;
 	velocity = vel;
 	maxVel = maxV;
 	mass = mss;
+	width = w;
+	height = h;
 	radar->center = radCenter;
 	radar->radius = radR;
 }
 
-Agent::Agent(vector2 pos, vector2 vel, vector2 mF, float maxV, float mss, float r, vector2 radCenter, float radR)
+Agent::Agent(vector2 pos, vector2 vel, vector2 mF, float maxV, float mss, float r, float w, float h, vector2 radCenter, float radR)
 {
 	position = pos;
 	velocity = vel;
@@ -42,6 +61,8 @@ Agent::Agent(vector2 pos, vector2 vel, vector2 mF, float maxV, float mss, float 
 	maxVel = maxV;
 	radious = r;
 	mass = r / 3;
+	width = w;
+	height = h;
 	radar->center = radCenter;
 	radar->radius = radR;
 }

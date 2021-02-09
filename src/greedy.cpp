@@ -11,7 +11,7 @@ void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
 		}*/
 		if ((ag != this) && this->radar->detect(ag->position, ag->radious)/*perception(ag)*/)
 		{
-			Agent::sb->arrival(this, ag, 80);
+			Agent::sb->arrival(this, ag, 120);
 			return;
 		}
 	}
