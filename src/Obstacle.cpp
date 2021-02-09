@@ -18,6 +18,43 @@ float Obstacle::getLenght()
 	return lenght = mag.getMagnitud();
 }
 
+float Obstacle::getminorDistance(vector2 origin)
+{
+	unsigned count = 3;
+	vector2 vec = origin - getP0();
+	vec.generarMagnitud();
+	float one = vec.getMagnitud();
+
+	vec.normalizar();
+	vec = origin - getP1();
+	vec.generarMagnitud();
+	float two = vec.getMagnitud();
+
+	vec.normalizar();
+	vec = origin - getP2();
+	vec.generarMagnitud();
+	float three = vec.getMagnitud();
+
+	vec.normalizar();
+	vec = origin - getP3();
+	vec.generarMagnitud();
+	float four = vec.getMagnitud();
+
+	float minValue = one;
+	list<float>min;
+	min.push_back(one);
+	min.push_back(two);
+	min.push_back(three);
+	min.push_back(four);
+
+	while (!min.empty())
+	{
+		if (minValue > min.front()) { minValue = min.front(); }
+		min.pop_front();
+	}
+	return minValue;
+}
+
 vector2 Obstacle::getP0()
 {
 	p0 = position;
