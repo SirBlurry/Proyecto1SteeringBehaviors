@@ -25,6 +25,7 @@ class Agent : public Obstacle
 				void arrival(Agent*, Agent*, float);
 				void seek(Agent*, Agent*);
 				void flee(Agent*, Agent*);
+				void obstacleAvoidance(Agent*, vector2, list<Agent*>&);
 		};
 	protected:
 		bool doIt = false;

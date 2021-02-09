@@ -5,31 +5,49 @@ void Obstacle::setObstacle(vector2 cPoint, float w, float h)
 	position = cPoint;
 	width = w;
 	height = h;
-	getDistanceX();
-	getDistanceY();
+	getP0();
+	getP1();
+	getP2();
+	getP3();
 	getLenght();
 }
 
 float Obstacle::getLenght()
 {
-	vector2 mag = distanceX - distanceY;
+	vector2 mag = p0 - p3;
 	return lenght = mag.getMagnitud();
 }
 
-vector2 Obstacle::getDistanceX()
+vector2 Obstacle::getP0()
 {
-	distanceX = position;
-	distanceX.x -= width / 2;
-	distanceX.y -= height / 2;
-	return distanceX;
+	p0 = position;
+	p0.x -= width / 2;
+	p0.y -= height / 2;
+	return p0;
 }
 
-vector2 Obstacle::getDistanceY()
+vector2 Obstacle::getP1()
 {
-	distanceY = position;
-	distanceY.x += width / 2;
-	distanceY.y += height / 2;
-	return distanceY;
+	p1 = position;
+	p1.x += width / 2;
+	p1.y -= height / 2;
+	return p1;
+}
+
+vector2 Obstacle::getP2()
+{
+	p2 = position;
+	p2.x -= width / 2;
+	p2.y += height / 2;
+	return p2;
+}
+
+vector2 Obstacle::getP3()
+{
+	p3 = position;
+	p3.x += width / 2;
+	p3.y += height / 2;
+	return p3;
 }
 
 void Obstacle::drawObstacle()

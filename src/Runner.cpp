@@ -1,7 +1,12 @@
-#include "greedy.h"
+#include "Runner.h"
 
-void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
+void Runner::manager(list<Agent*>& agents, time_t* deltaTime)
 {
+	this->setRadarRadius(50.0f);
+	this->radarCenter() = this->velocity;
+	this->radarCenter().normalizar();
+	this->radarCenter().multiEscalar(50.0f);
+	this->radarCenter() += this->position;
 	for (Agent* ag : agents)
 	{
 		/*if ((Agent::position - ag->position).getMagnitud() < perceptionRadious)
@@ -15,15 +20,15 @@ void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
 			|| this->radar->detect(ag->getP2(), ag->lenght)
 			|| this->radar->detect(ag->getP3(), ag->lenght))/*perception(ag)*/)
 		{
-			Agent::sb->arrival(this, ag, 120);
+			Agent::sb->obstacleAvoidance(this, position, agents);
 			return;
 		}
 	}
-	sb->wander(this, 120, deltaTime);
+	sb->seek(this, agents.front());
 	Agent::doIt = Agent::limits();
 }
 
-bool Greedy::perception(Agent* trgt)
+bool Runner::perception(Agent* trgt)
 {
 	vector2 view = velocity;
 	view.normalizar();

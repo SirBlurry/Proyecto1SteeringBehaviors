@@ -3,6 +3,7 @@
 #include "ofMain.h"
 //#include "../sBehaviours.h"
 #include "greedy.h"
+#include "Runner.h"
 		
 class ofApp : public ofBaseApp{
 
