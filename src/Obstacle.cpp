@@ -18,7 +18,7 @@ float Obstacle::getLenght()
 	return lenght = mag.getMagnitud();
 }
 
-float Obstacle::getminorDistance(vector2 origin)
+float Obstacle::getMinorDistance(vector2 origin)
 {
 	unsigned count = 3;
 	vector2 vec = origin - getP0();

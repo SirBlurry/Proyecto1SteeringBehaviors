@@ -27,7 +27,7 @@ public:
 	}
 	void setObstacle(vector2, float, float);
 	float getLenght();
-	float getminorDistance(vector2);
+	float getMinorDistance(vector2);
 	vector2 getP0();
 	vector2 getP1();
 	vector2 getP2();
