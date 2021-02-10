@@ -1,42 +1,30 @@
-#include "greedy.h"
+#include "Patrol.h"
 
-void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
+void Patrol::manager(list<Agent*>& agents, list<vector2>& path)
 {
-	this->setRadarRadius(120.0f);
+	this->setRadarRadius(35.0f);
 	this->radarCenter() = this->velocity;
 	this->radarCenter().normalizar();
-	this->radarCenter().multiEscalar(80.0f);
+	this->radarCenter().multiEscalar(35.0f);
 	this->radarCenter() += this->position;
+
 	for (Agent* ag : agents)
 	{
-		/*if ((Agent::position - ag->position).getMagnitud() < perceptionRadious)
-		{
-			Agent::sb->seek(this, ag);
-			return;
-		}*/
 		if ((ag != this) && (this->radar->detect(ag->position, ag->lenght)
 			|| this->radar->detect(ag->getP0(), ag->lenght)
 			|| this->radar->detect(ag->getP1(), ag->lenght)
 			|| this->radar->detect(ag->getP2(), ag->lenght)
 			|| this->radar->detect(ag->getP3(), ag->lenght))/*perception(ag)*/)
 		{
-			if (ag->width < 70.0f)
-			{
-				Agent::sb->arrival(this, ag->position, 120);
-				return;
-			}
-			else
-			{
-				Agent::sb->obstacleAvoidance(this, position, agents);
-				return;
-			}
+			Agent::sb->obstacleAvoidance(this, position, agents);
+			return;
 		}
 	}
-	sb->wander(this, 120, deltaTime);
+	sb->pathFollowing(this, &path);
 	Agent::doIt = Agent::limits();
 }
 
-bool Greedy::perception(Agent* trgt)
+bool Patrol::perception(Agent* trgt)
 {
 	vector2 view = velocity;
 	view.normalizar();

@@ -1,12 +1,13 @@
 #include "Runner.h"
 
-void Runner::manager(list<Agent*>& agents, time_t* deltaTime)
+void Runner::manager(list<Agent*>& agents, list<vector2>& path)
 {
 	this->setRadarRadius(50.0f);
 	this->radarCenter() = this->velocity;
 	this->radarCenter().normalizar();
-	this->radarCenter().multiEscalar(50.0f);
+	this->radarCenter().multiEscalar(80.0f);
 	this->radarCenter() += this->position;
+
 	for (Agent* ag : agents)
 	{
 		/*if ((Agent::position - ag->position).getMagnitud() < perceptionRadious)
@@ -24,7 +25,8 @@ void Runner::manager(list<Agent*>& agents, time_t* deltaTime)
 			return;
 		}
 	}
-	sb->seek(this, agents.front());
+	//sb->pathFollowing(this, &path);
+	sb->interpose(this, agents.front(), agents.back());
 	Agent::doIt = Agent::limits();
 }
 

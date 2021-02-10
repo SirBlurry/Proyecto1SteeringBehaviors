@@ -2,11 +2,12 @@
 #include <ofAppRunner.h>
 #include "Radar.h"
 #include "Obstacle.h"
-#include <iostream>
+//#include <iostream>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
 using std::cout; using std::endl;
+using std::vector;
 
 class Agent : public Obstacle
 {
@@ -22,10 +23,12 @@ class Agent : public Obstacle
 					displacement = vector2(rand() % 101 - 50, rand() % 101 - 50);
 				}
 				void wander(Agent*, float, time_t*);
-				void arrival(Agent*, Agent*, float);
-				void seek(Agent*, Agent*);
+				void arrival(Agent*, vector2, float);
+				void interpose(Agent*, Agent*, Agent*);
+				void seek(Agent*, vector2);
 				void flee(Agent*, Agent*);
 				void obstacleAvoidance(Agent*, vector2, list<Agent*>&);
+				void pathFollowing(Agent*, list<vector2>*);
 		};
 	protected:
 		bool doIt = false;

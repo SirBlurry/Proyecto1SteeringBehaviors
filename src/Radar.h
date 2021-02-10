@@ -17,5 +17,5 @@ public:
 	Radar(float rad) : radius(rad) {}
 	Radar(vector2 owner, float rad) : center(owner), radius(rad) {}
 	bool detect(vector2, float);
-	void drawRadar(vector2);
+	void drawRadar();
 };

@@ -9,47 +9,46 @@ void Obstacle::setObstacle(vector2 cPoint, float w, float h)
 	getP1();
 	getP2();
 	getP3();
+	getPCenter0();
+	getPCenter1();
+	getPCenter2();
+	getPCenter3();
 	getLenght();
 }
 
 float Obstacle::getLenght()
 {
 	vector2 mag = p0 - p3;
+	mag.normalizar();
+	mag.generarMagnitud();
 	return lenght = mag.getMagnitud();
 }
 
-float Obstacle::getMinorDistance(vector2 origin)
+vector2 Obstacle::getMinorDistance(vector2 origin)
 {
-	unsigned count = 3;
-	vector2 vec = origin - getP0();
-	vec.generarMagnitud();
-	float one = vec.getMagnitud();
+	vector2 one = origin - getP0();
+	vector2 two = origin - getP1();
+	vector2 three = origin - getP2();
+	vector2 four = origin - getP3();
+	vector2 oneCenter = origin - getPCenter0();
+	vector2 twoCenter = origin - getPCenter1();
+	vector2 threeCenter = origin - getPCenter2();
+	vector2 fourCenter = origin - getPCenter3();
 
-	vec.normalizar();
-	vec = origin - getP1();
-	vec.generarMagnitud();
-	float two = vec.getMagnitud();
-
-	vec.normalizar();
-	vec = origin - getP2();
-	vec.generarMagnitud();
-	float three = vec.getMagnitud();
-
-	vec.normalizar();
-	vec = origin - getP3();
-	vec.generarMagnitud();
-	float four = vec.getMagnitud();
-
-	float minValue = one;
-	list<float>min;
+	vector2 minValue = one;
+	list<vector2>min;
 	min.push_back(one);
 	min.push_back(two);
 	min.push_back(three);
 	min.push_back(four);
+	min.push_back(oneCenter);
+	min.push_back(twoCenter);
+	min.push_back(threeCenter);
+	min.push_back(fourCenter);
 
 	while (!min.empty())
 	{
-		if (minValue > min.front()) { minValue = min.front(); }
+		if (minValue.getMagnitud() > min.front().getMagnitud()) { minValue = min.front(); }
 		min.pop_front();
 	}
 	return minValue;
@@ -85,6 +84,34 @@ vector2 Obstacle::getP3()
 	p3.x += width / 2;
 	p3.y += height / 2;
 	return p3;
+}
+
+vector2 Obstacle::getPCenter0()
+{
+	pCenter0 = position;
+	pCenter0.y -= height;
+	return pCenter0;
+}
+
+vector2 Obstacle::getPCenter1()
+{
+	pCenter1 = position;
+	pCenter1.y += width;
+	return pCenter1;
+}
+
+vector2 Obstacle::getPCenter2()
+{
+	pCenter2 = position;
+	pCenter2.y += height;
+	return pCenter2;
+}
+
+vector2 Obstacle::getPCenter3()
+{
+	pCenter3 = position;
+	pCenter3.y -= width;
+	return pCenter3;
 }
 
 void Obstacle::drawObstacle()

@@ -6,9 +6,8 @@ bool Radar::detect(vector2 object, float objRadius)
 	return false;
 }
 
-void Radar::drawRadar(vector2 owner)
+void Radar::drawRadar()
 {
-	center = owner;
 	ofSetColor(200, 60, 80, 60);
 	ofDrawCircle(center.x, center.y, radius);
 }

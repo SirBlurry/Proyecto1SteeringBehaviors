@@ -4,6 +4,8 @@
 //#include "../sBehaviours.h"
 #include "greedy.h"
 #include "Runner.h"
+#include "Patrol.h"
+#include "Coward.h"
 		
 class ofApp : public ofBaseApp{
 

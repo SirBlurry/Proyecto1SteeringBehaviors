@@ -1,11 +1,11 @@
-#include "greedy.h"
+#include "Coward.h"
 
-void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
+void Coward::manager(list<Agent*>& agents, time_t* deltaTime)
 {
-	this->setRadarRadius(120.0f);
+	this->setRadarRadius(60.0f);
 	this->radarCenter() = this->velocity;
 	this->radarCenter().normalizar();
-	this->radarCenter().multiEscalar(80.0f);
+	this->radarCenter().multiEscalar(40.0f);
 	this->radarCenter() += this->position;
 	for (Agent* ag : agents)
 	{
@@ -20,23 +20,15 @@ void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
 			|| this->radar->detect(ag->getP2(), ag->lenght)
 			|| this->radar->detect(ag->getP3(), ag->lenght))/*perception(ag)*/)
 		{
-			if (ag->width < 70.0f)
-			{
-				Agent::sb->arrival(this, ag->position, 120);
-				return;
-			}
-			else
-			{
-				Agent::sb->obstacleAvoidance(this, position, agents);
-				return;
-			}
+			Agent::sb->flee(this, ag);
+			return;
 		}
 	}
-	sb->wander(this, 120, deltaTime);
+	sb->wander(this, 60.0f, deltaTime);
 	Agent::doIt = Agent::limits();
 }
 
-bool Greedy::perception(Agent* trgt)
+bool Coward::perception(Agent* trgt)
 {
 	vector2 view = velocity;
 	view.normalizar();
