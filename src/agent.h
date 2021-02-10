@@ -29,6 +29,9 @@ class Agent : public Obstacle
 				void WallAvoidance(Agent*, list<Agent*>&,float);
 				vector2 GetHidingPosition(Agent*, Agent* );
 				void Hide(Agent* , list<Agent*>& , Agent* );
+				void Evade(Agent* , Agent* );
+				void Pursuit(Agent* , Agent* );
+				vector2 GetCollisionPoint(Agent* , Agent* );
 		};
 	protected:
 		bool doIt = false;
