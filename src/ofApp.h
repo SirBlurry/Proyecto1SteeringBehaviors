@@ -6,6 +6,7 @@
 #include "Runner.h"
 #include "Patrol.h"
 #include "Coward.h"
+#include "Follower.h"
 		
 class ofApp : public ofBaseApp{
 

@@ -9,10 +9,6 @@ void Obstacle::setObstacle(vector2 cPoint, float w, float h)
 	getP1();
 	getP2();
 	getP3();
-	getPCenter0();
-	getPCenter1();
-	getPCenter2();
-	getPCenter3();
 	getLenght();
 }
 
@@ -30,10 +26,6 @@ vector2 Obstacle::getMinorDistance(vector2 origin)
 	vector2 two = origin - getP1();
 	vector2 three = origin - getP2();
 	vector2 four = origin - getP3();
-	vector2 oneCenter = origin - getPCenter0();
-	vector2 twoCenter = origin - getPCenter1();
-	vector2 threeCenter = origin - getPCenter2();
-	vector2 fourCenter = origin - getPCenter3();
 
 	vector2 minValue = one;
 	list<vector2>min;
@@ -41,10 +33,6 @@ vector2 Obstacle::getMinorDistance(vector2 origin)
 	min.push_back(two);
 	min.push_back(three);
 	min.push_back(four);
-	min.push_back(oneCenter);
-	min.push_back(twoCenter);
-	min.push_back(threeCenter);
-	min.push_back(fourCenter);
 
 	while (!min.empty())
 	{
@@ -52,6 +40,45 @@ vector2 Obstacle::getMinorDistance(vector2 origin)
 		min.pop_front();
 	}
 	return minValue;
+}
+
+vector2 Obstacle::getNearPoint(vector2 origin)
+{
+	vector2 one = origin - getP0();
+	vector2 two = origin - getP1();
+	vector2 three = origin - getP2();
+	vector2 four = origin - getP3();
+
+	vector2 nearPoint = one;
+	list<vector2>min;
+	min.push_back(one);
+	min.push_back(two);
+	min.push_back(three);
+	min.push_back(four);
+	list<vector2>nearP;
+	nearP.push_back(p0);
+	nearP.push_back(p1);
+	nearP.push_back(p2);
+	nearP.push_back(p3);
+	while (!min.empty())
+	{
+		if (nearPoint.getMagnitud() > min.front().getMagnitud()) { nearPoint = nearP.front(); }
+		min.pop_front();
+		nearP.pop_front();
+	}
+	if (nearPoint.getMagnitud() == p0.getMagnitud()) { nearPoint -= vector2(50.0f, 50.0f); }
+	else if (nearPoint.getMagnitud() == p1.getMagnitud()) { nearPoint += vector2(50.0f, 50.0f); }
+	else if (nearPoint.getMagnitud() == p2.getMagnitud())
+	{
+		nearPoint.x -= 50.0f;
+		nearPoint.y += 50.0f;
+	}
+	else
+	{
+		nearPoint.x += 50.0f;
+		nearPoint.y -= 50.0f;
+	}
+	return nearPoint;
 }
 
 vector2 Obstacle::getP0()
@@ -86,32 +113,36 @@ vector2 Obstacle::getP3()
 	return p3;
 }
 
-vector2 Obstacle::getPCenter0()
+vector2 Obstacle::getTop()
 {
-	pCenter0 = position;
-	pCenter0.y -= height;
-	return pCenter0;
+	vector2 top = position;
+	top.y -= height / 2;
+	//top.multiEscalar(0.5f);
+	return top;
 }
 
-vector2 Obstacle::getPCenter1()
+vector2 Obstacle::getBottom()
 {
-	pCenter1 = position;
-	pCenter1.y += width;
-	return pCenter1;
+	vector2 bott = position;
+	bott.y += height / 2;
+	//bott.multiEscalar(0.5f);
+	return bott;
 }
 
-vector2 Obstacle::getPCenter2()
+vector2 Obstacle::getLeft()
 {
-	pCenter2 = position;
-	pCenter2.y += height;
-	return pCenter2;
+	vector2 left = position;
+	left.x -= width / 2;
+	//left.multiEscalar(0.5f);
+	return left;
 }
 
-vector2 Obstacle::getPCenter3()
+vector2 Obstacle::getRight()
 {
-	pCenter3 = position;
-	pCenter3.y -= width;
-	return pCenter3;
+	vector2 right = position;
+	right.x += width / 2;
+	//right.multiEscalar(0.5f);
+	return right;
 }
 
 void Obstacle::drawObstacle()

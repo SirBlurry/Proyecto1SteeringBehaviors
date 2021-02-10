@@ -16,10 +16,6 @@ public:
 	vector2 p1 = vector2(0, 0);
 	vector2 p2 = vector2(0, 0);
 	vector2 p3 = vector2(0, 0);
-	vector2 pCenter0 = vector2(0, 0);
-	vector2 pCenter1 = vector2(0, 0);
-	vector2 pCenter2 = vector2(0, 0);
-	vector2 pCenter3 = vector2(0, 0);
 	Obstacle() {}
 	Obstacle(vector2 cPoint, float w, float h) : position(cPoint), width(w), height(h) 
 	{
@@ -32,13 +28,14 @@ public:
 	void setObstacle(vector2, float, float);
 	float getLenght();
 	vector2 getMinorDistance(vector2);
+	vector2 getNearPoint(vector2);
 	vector2 getP0();
 	vector2 getP1();
 	vector2 getP2();
 	vector2 getP3();
-	vector2 getPCenter0();
-	vector2 getPCenter1();
-	vector2 getPCenter2();
-	vector2 getPCenter3();
+	vector2 getTop();
+	vector2 getBottom();
+	vector2 getLeft();
+	vector2 getRight();
 	void drawObstacle();
 };

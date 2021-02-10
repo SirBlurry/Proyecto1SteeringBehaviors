@@ -27,7 +27,8 @@ class Agent : public Obstacle
 				void interpose(Agent*, Agent*, Agent*);
 				void seek(Agent*, vector2);
 				void flee(Agent*, Agent*);
-				void obstacleAvoidance(Agent*, vector2, list<Agent*>&);
+				void obstacleAvoidance(Agent*, Obstacle*);
+				void wallAvoidance(Agent*, Obstacle*);
 				void pathFollowing(Agent*, list<vector2>*);
 		};
 	protected:

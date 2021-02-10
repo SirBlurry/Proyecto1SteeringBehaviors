@@ -2,7 +2,7 @@
 
 bool Radar::detect(vector2 object, float objRadius)
 {
-	if ((object - center).getMagnitud() < radius + objRadius) { return true; }
+	if ((center - object).getMagnitud() < radius + objRadius) { return true; }
 	return false;
 }
 

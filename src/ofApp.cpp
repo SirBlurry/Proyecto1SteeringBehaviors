@@ -1,18 +1,20 @@
 #include "ofApp.h"
 
 vector2 mouse;
+Obstacle wall;
+Obstacle wall1;
+Obstacle wall2;
+Obstacle wall3;
+Obstacle wall4;
+Obstacle wall5;
 Agent target;
-Agent wall;
-Agent wall1;
-Agent wall2;
-Agent wall3;
-Agent wall4;
-Agent wall5;
+Follower follow;
 Greedy g;
 Coward cow;
 Runner run;
 Patrol pat1;
 Patrol pat2;
+list<Obstacle*>walls;
 list<Agent*>agents;
 list<vector2>path;
 list<vector2>path1;
@@ -21,30 +23,32 @@ time_t oldTime, deltaTime;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	wall = Agent(vector2(500, 500), 80, 80);
-	wall1 = Agent(vector2(100, 600), 80, 80);
-	wall2 = Agent(vector2(1200, 100), 80, 80);
-	wall3 = Agent(vector2(350, 700), 80, 80);
-	wall4 = Agent(vector2(400, 200), 80, 80);
-	wall5 = Agent(vector2(1000, 500), 80, 80);
+	wall = Obstacle(vector2(500, 500), 20, 200);
+	wall1 = Obstacle(vector2(100, 600), 80, 80);
+	wall2 = Obstacle(vector2(1200, 100), 110, 40);
+	wall3 = Obstacle(vector2(350, 700), 40, 150);
+	wall4 = Obstacle(vector2(400, 200), 240, 60);
+	wall5 = Obstacle(vector2(1000, 500), 80, 80);
 	run = Runner(120, vector2(60, 100), vector2(), vector2(3, 3), 4, 20, 20, 60, 60, vector2(run.position.x, run.position.y), 100.0f);
 	g = Greedy(120, vector2(500, 450), vector2(), vector2(3, 3), 2, 20, 20, 60, 60);
 	cow = Coward(120, vector2(900, 100), vector2(), vector2(3, 3), 6, 10, 15, 30, 30);
 	pat1 = Patrol(120, vector2(1400, 300), vector2(), vector2(3, 3), 3, 5, 10, 20, 20);
 	pat2 = Patrol(120, vector2(1400, 600), vector2(), vector2(3, 3), 3, 5, 10, 20, 20);
 	target = Agent(vector2(264, 264), vector2(0, 0), vector2(0, 0), 15, 20, 20, 40, 40);
+	follow = Follower(120, vector2(264, 264), vector2(0, 0), vector2(6, 6), 8, 2.5f, 10.0f, 20, 20);
 	
+	walls.push_back(&wall);
+	walls.push_back(&wall1);
+	walls.push_back(&wall2);
+	walls.push_back(&wall3);
+	walls.push_back(&wall4);
+	walls.push_back(&wall5);
 	agents.push_back(&pat1);
 	agents.push_back(&target);
 	agents.push_back(&cow);
-	agents.push_back(&wall);
-	agents.push_back(&wall1);
-	agents.push_back(&wall2);
-	agents.push_back(&wall3);
-	agents.push_back(&wall4);
-	agents.push_back(&wall5);
 	agents.push_back(&g);
 	agents.push_back(&run);
+	agents.push_back(&follow);
 	agents.push_back(&pat2);
 
 	path.push_back(vector2(510.0f, 110.0f));
@@ -75,26 +79,27 @@ void ofApp::update(){
 	mouse.x = ofGetMouseX();
 	mouse.y = ofGetMouseY();
 	target.position = mouse;
-	g.manager(agents, &deltaTime);
+	g.manager(agents, walls, &deltaTime);
 	if (deltaTime > 2) {
 		oldTime = time(NULL);
 	}
-	cow.manager(agents, &deltaTime);
+	cow.manager(agents, walls, &deltaTime);
 	if (deltaTime > 2) {
 		oldTime = time(NULL);
 	}
-	run.manager(agents, path);
+	run.manager(agents, path, walls);
 	if (deltaTime > 2) {
 		oldTime = time(NULL);
 	}
-	pat1.manager(agents, path1);
+	pat1.manager(agents, path1, walls);
 	if (deltaTime > 2) {
 		oldTime = time(NULL);
 	}
-	pat2.manager(agents, path2);
+	pat2.manager(agents, path2, walls);
 	if (deltaTime > 2) {
 		oldTime = time(NULL);
 	}
+	follow.manager(&target, walls);
 }
 
 //--------------------------------------------------------------
@@ -106,12 +111,13 @@ void ofApp::draw(){
 	wall4.drawObstacle();
 	wall5.drawObstacle();
 	target.drawObstacle();
-	g.drawObstacle();
+	cow.drawObstacle();
 	g.radar->drawRadar();
 	cow.radar->drawRadar();
 	run.radar->drawRadar();
 	pat1.radar->drawRadar();
 	pat2.radar->drawRadar();
+	follow.radar->drawRadar();
 	ofSetColor(220, 220, 220);
 	ofDrawRectangle(g.position.x, g.position.y, g.width, g.height);
 	ofDrawRectangle(run.position.x, run.position.y, run.width, run.height);
@@ -121,6 +127,8 @@ void ofApp::draw(){
 	ofDrawRectangle(pat2.position.x, pat2.position.y, pat2.width, pat2.height);
 	ofSetColor(40, 230, 80);
 	ofDrawRectangle(cow.position.x, cow.position.y, cow.width, cow.height);
+	ofSetColor(140, 30, 80);
+	ofDrawCircle(follow.position.x, follow.position.y, follow.radious);
 }
 
 //--------------------------------------------------------------

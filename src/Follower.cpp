@@ -1,13 +1,9 @@
-#include "Patrol.h"
+#include "Follower.h"
 
-void Patrol::manager(list<Agent*>& agents, list<vector2>& path, list<Obstacle*>& obstacles)
+void Follower::manager(Agent*agent, list<Obstacle*>& obstacles)
 {
-	this->setRadarRadius(35.0f);
-	this->radarCenter() = this->velocity;
-	this->radarCenter().normalizar();
-	this->radarCenter().multiEscalar(35.0f);
-	this->radarCenter() += this->position;
-
+	this->setRadarRadius(50.0f);
+	this->radarCenter() = this->position;
 	for (Obstacle* ob : obstacles)
 	{
 		if (this->radar->detect(ob->position, ob->getLenght())
@@ -20,11 +16,11 @@ void Patrol::manager(list<Agent*>& agents, list<vector2>& path, list<Obstacle*>&
 			return;
 		}
 	}
-	sb->pathFollowing(this, &path);
+	sb->seek(this, agent->position);
 	Agent::doIt = Agent::limits();
 }
 
-bool Patrol::perception(Agent* trgt)
+bool Follower::perception(Agent* trgt)
 {
 	vector2 view = velocity;
 	view.normalizar();

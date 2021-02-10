@@ -9,28 +9,14 @@ void Agent::sBehaviours::wander(Agent* self, float vista, time_t* deltaTime) {
 	self->radarCenter().multiEscalar(vista);
 	self->radarCenter() += self->position;
 
-	/*vector2 guide = self->velocity;
-	guide.normalizar();
-	guide.multiEscalar(vista);
-	guide += self->position;*/
 	if (*deltaTime == 1) canChange = true;
-	if ((*deltaTime == 0 && canChange) || self->doIt) {
+	if ((*deltaTime == 0 && canChange) || self->doIt) 
+	{
 		displacement = vector2((rand() % (rango * 2 + 1)) - rango, (rand() % (rango * 2 + 1)) - rango);
-		//cout << displacement.x << ", " << displacement.y << ", " << *deltaTime << endl;
 		canChange = false;
-		if(self->doIt) self->doIt = false;
+		if (self->doIt) { self->doIt = false; }
 	}
 	seek(self, displacement);
-	//self->Displ = self->radarCenter();
-	//vector2 steering = self->radarCenter() + displacement;
-	///*self->Displ = guide;
-	//vector2 steering = guide + displacement;*/
-	////cout << "steer: " << steering.x << ", " << steering.y << endl;
-	//steering = vector2::truncar(steering, self->maxForce.getMagnitud());
-	//steering.dividirEscalar(self->mass);
-
-	//self->velocity = vector2::truncar((steering + self->velocity), self->maxVel);
-	//self->position += self->velocity;
 }
 
 void Agent::sBehaviours::arrival(Agent* owner, vector2 target, float slowArea)
@@ -95,23 +81,48 @@ void Agent::sBehaviours::seek(Agent* self, vector2 target)
 	self->position += self->velocity;
 }
 
-void Agent::sBehaviours::obstacleAvoidance(Agent* self, vector2 destiny, list<Agent*>& agents)
+void Agent::sBehaviours::obstacleAvoidance(Agent* self, Obstacle* obstacle)
 {
 	vector2 avoid;
-	for (Agent* ag : agents)
+	if (self->radar->detect(obstacle->position, obstacle->getLenght()))
 	{
-		/*if (self->radar->detect(ag->position, ag->width) || self->radar->detect(ag->position, ag->height))*/
-		if (self->radar->detect(ag->position, ag->getLenght()))
-		{
-			avoid = self->radarCenter() - ag->getMinorDistance(self->velocity);
-			avoid.normalizar();
-			avoid.multiEscalar(self->maxVel);
-		}
-		else
-		{
-			avoid.multiEscalar(0.0f);
-		}
+		avoid = self->radarCenter() - obstacle->getMinorDistance(self->velocity);
+		avoid.normalizar();
+		avoid.multiEscalar(self->maxVel);
 	}
+	else
+	{
+		avoid.multiEscalar(0.0f);
+	}
+	avoid = self->radarCenter() - obstacle->getMinorDistance(self->velocity);
+	avoid.normalizar();
+	avoid.multiEscalar(self->maxVel);
+
+	vector2 steering = self->velocity + avoid;
+	steering = vector2::truncar(steering, self->maxForce.getMagnitud());
+	steering.dividirEscalar(self->mass);
+
+	self->velocity = vector2::truncar((steering + self->velocity), self->maxVel);
+	self->position += self->velocity;
+}
+
+void Agent::sBehaviours::wallAvoidance(Agent* self, Obstacle* obstacle)
+{
+	vector2 avoid;
+	if (self->radar->detect(obstacle->position, obstacle->getLenght()))
+	{
+		avoid = self->radarCenter() + obstacle->getNearPoint(self->velocity);
+		avoid.normalizar();
+		avoid.multiEscalar(self->maxVel);
+	}
+	else
+	{
+		avoid.multiEscalar(0.0f);
+	}
+	avoid = self->radarCenter() + obstacle->getNearPoint(self->velocity);
+	avoid.normalizar();
+	avoid.multiEscalar(self->maxVel);
+
 	vector2 steering = self->velocity + avoid;
 	steering = vector2::truncar(steering, self->maxForce.getMagnitud());
 	steering.dividirEscalar(self->mass);
