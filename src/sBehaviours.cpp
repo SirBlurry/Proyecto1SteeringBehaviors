@@ -159,3 +159,107 @@ void Agent::sBehaviours::flee(Agent* self, Agent* target)
 	self->velocity = vector2::truncar((steering + self->velocity), self->maxVel);
 	self->position -= self->velocity;
 }
+
+void Agent::sBehaviours::OffsetPursuit(Agent* self, float offset, Agent* target)
+{
+	vector2 targetvel = target->velocity;
+	targetvel.multiEscalar(-1);
+	targetvel.normalizar();
+	targetvel.multiEscalar(offset);
+	vector2 behind = target->position + targetvel;
+
+	vector2 firstCenter = self->radarCenter();
+	self->radarCenter() = behind;
+	self->setRadarRadius(offset);
+	vector2 desired_vel = behind - self->position;
+	float distance = desired_vel.getMagnitud();
+	desired_vel.normalizar();
+	if (distance < self->getRadarRadius()) {
+		desired_vel.multiEscalar(self->maxVel * (distance / self->getRadarRadius()));
+	}
+	else {
+		desired_vel.multiEscalar(self->maxVel);
+	}
+	vector2 steering = vector2::resta(desired_vel, self->velocity);
+	steering = vector2::truncar(steering, self->maxForce.getMagnitud());
+	steering.dividirEscalar(self->mass);
+
+	self->velocity = vector2::truncar((steering + self->velocity), self->maxVel);
+	self->position += self->velocity;
+
+}
+
+void Agent::sBehaviours::Hide(Agent* self, list<Obstacle*>& objects, Agent* target) {
+	float disToClosest = 1000;
+	vector2 bestHiding;
+	for (Obstacle* obj : objects) {
+		vector2 hidingSpot = obj->getMinorDistance(self->position);
+		float distance = hidingSpot.getMagnitud();
+		if (distance < disToClosest) {
+			disToClosest = distance;
+			bestHiding = hidingSpot;
+		}
+	}
+	if (disToClosest == 1000) {
+		Evade(self, target);
+		return;
+	}
+	vector2 firstCenter = self->radarCenter();
+	self->radarCenter() = bestHiding;
+	self->setRadarRadius(50);
+	vector2 desired_vel = bestHiding - self->position;
+	float distance = desired_vel.getMagnitud();
+	desired_vel.normalizar();
+	if (distance < self->getRadarRadius()) {
+		desired_vel.multiEscalar(self->maxVel * (distance / self->getRadarRadius()));
+	}
+	else {
+		desired_vel.multiEscalar(self->maxVel);
+	}
+	vector2 steering = vector2::resta(desired_vel, self->velocity);
+	steering = vector2::truncar(steering, self->maxForce.getMagnitud());
+	steering.dividirEscalar(self->mass);
+
+	self->velocity = vector2::truncar((steering + self->velocity), self->maxVel);
+	self->position += self->velocity;
+
+}
+void Agent::sBehaviours::Evade(Agent* self, Agent* target)
+{
+	float T;
+	vector2 distance = target->position - self->position;
+	T = distance.getMagnitud() / self->maxVel;
+	vector2 targetvel = target->velocity;
+	targetvel.multiEscalar(T);
+	vector2 futurePos = target->position + targetvel;
+	vector2 desired_vel = futurePos - self->position;
+	desired_vel.normalizar();
+	desired_vel.multiEscalar(self->maxVel);
+	vector2 steering = vector2::resta(desired_vel, self->velocity);
+	steering = vector2::truncar(steering, self->maxForce.getMagnitud());
+	steering.dividirEscalar(self->mass);
+
+	self->velocity = vector2::truncar((steering + self->velocity), self->maxVel);
+	self->position -= self->velocity;
+
+}
+
+void Agent::sBehaviours::Pursuit(Agent* self, Agent* target)
+{
+	float T;
+	vector2 distance = target->position - self->position;
+	T = distance.getMagnitud() / self->maxVel;
+	vector2 targetvel = target->velocity;
+	targetvel.multiEscalar(T);
+	vector2 futurePos = target->position + targetvel;
+	vector2 desired_vel = futurePos - self->position;
+	desired_vel.normalizar();
+	desired_vel.multiEscalar(self->maxVel);
+	vector2 steering = vector2::resta(desired_vel, self->velocity);
+	steering = vector2::truncar(steering, self->maxForce.getMagnitud());
+	steering.dividirEscalar(self->mass);
+
+	self->velocity = vector2::truncar((steering + self->velocity), self->maxVel);
+	self->position += self->velocity;
+
+}

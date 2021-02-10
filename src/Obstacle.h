@@ -29,6 +29,7 @@ public:
 	float getLenght();
 	vector2 getMinorDistance(vector2);
 	vector2 getNearPoint(vector2);
+	vector2 getNearObstacle(vector2, list<Obstacle*>&);
 	vector2 getP0();
 	vector2 getP1();
 	vector2 getP2();

@@ -13,7 +13,8 @@ class Agent : public Obstacle
 {
 	private:
 		//class sBehaviours; // fordward declaration
-		class sBehaviours {
+		class sBehaviours 
+		{
 			private:
 				bool canChange = true;
 				vector2 displacement = vector2(0,0);
@@ -30,6 +31,10 @@ class Agent : public Obstacle
 				void obstacleAvoidance(Agent*, Obstacle*);
 				void wallAvoidance(Agent*, Obstacle*);
 				void pathFollowing(Agent*, list<vector2>*);
+				void OffsetPursuit(Agent*, float, Agent*);
+				void Hide(Agent*, list<Obstacle*>&, Agent*);
+				void Evade(Agent*, Agent*);
+				void Pursuit(Agent*, Agent*);
 		};
 	protected:
 		bool doIt = false;

@@ -81,6 +81,11 @@ vector2 Obstacle::getNearPoint(vector2 origin)
 	return nearPoint;
 }
 
+vector2 Obstacle::getNearObstacle(vector2, list<Obstacle*>&)
+{
+	return vector2();
+}
+
 vector2 Obstacle::getP0()
 {
 	p0 = position;
