@@ -1,6 +1,6 @@
 #include "greedy.h"
 
-void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
+void Greedy::manager(list<Agent*>& agents, time_t* deltaTime,list<Agent*>& obstacles)
 {
 	for (Agent* ag : agents)
 	{
@@ -9,13 +9,16 @@ void Greedy::manager(list<Agent*>& agents, time_t* deltaTime)
 			Agent::sb->seek(this, ag);
 			return;
 		}*/
+
 		if ((ag != this) && this->radar->detect(ag->position, ag->radious)/*perception(ag)*/)
 		{
-			Agent::sb->arrival(this, ag, 120);
+			Agent::sb->OffsetPursuit(this, 50, ag);
 			return;
 		}
+
 	}
 	sb->wander(this, 120, deltaTime);
+	//sb->WallAvoidance(this, obstacles, 5);
 	Agent::doIt = Agent::limits();
 }
 

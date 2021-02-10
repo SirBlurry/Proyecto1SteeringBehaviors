@@ -25,6 +25,10 @@ class Agent : public Obstacle
 				void arrival(Agent*, Agent*, float);
 				void seek(Agent*, Agent*);
 				void flee(Agent*, Agent*);
+				void OffsetPursuit(Agent*,float , Agent*);
+				void WallAvoidance(Agent*, list<Agent*>&,float);
+				vector2 GetHidingPosition(Agent*, Agent* );
+				void Hide(Agent* , list<Agent*>& , Agent* );
 		};
 	protected:
 		bool doIt = false;

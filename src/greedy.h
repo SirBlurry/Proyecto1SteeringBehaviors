@@ -14,6 +14,6 @@ public:
 	}
 	Greedy(float prcptn, vector2 pos, vector2 vel, vector2 maxFrc, float maxV, float mss, float r, float w, float h) :
 		perceptionRadious(prcptn), Agent(pos, vel, maxFrc, maxV, mss, r, w, h) {}
-	void manager(list<Agent*>&, time_t*);
+	void manager(list<Agent*>&, time_t*,list<Agent*>&);
 	bool perception(Agent*);
 };

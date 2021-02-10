@@ -18,8 +18,11 @@ Agent::Agent(vector2 pos, vector2 vel, float maxV, float mss, float w, float h) 
 	mass = mss;
 	width = w;
 	height = h;
-	getDistanceX();
-	getDistanceY();
+	getP0();
+	getP1();
+	getP2();
+	getP3();
+
 	getLenght();
 	//sb = sBehaviours();
 }
@@ -36,8 +39,10 @@ Agent::Agent(vector2 pos, vector2 vel, vector2 mF, float maxV, float mss, float 
 	mass = r / 3;
 	width = w;
 	height = h;
-	getDistanceX();
-	getDistanceY();
+	getP0();
+	getP1();
+	getP2();
+	getP3();
 	getLenght();
 }
 
@@ -107,3 +112,4 @@ bool Agent::limits() {
 	}
 	return bandera;
 }
+
