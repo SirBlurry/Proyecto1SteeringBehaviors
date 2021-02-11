@@ -35,7 +35,7 @@ void ofApp::setup(){
 	pat1 = Patrol(120, vector2(1400, 300), vector2(), vector2(3, 3), 3, 5, 10, 20, 20);
 	pat2 = Patrol(120, vector2(1400, 600), vector2(), vector2(3, 3), 3, 5, 10, 20, 20);
 	target = Agent(vector2(264, 264), vector2(0, 0), vector2(0, 0), 15, 20, 20, 40, 40);
-	follow = Follower(120, vector2(264, 264), vector2(0, 0), vector2(6, 6), 8, 2.5f, 10.0f, 20, 20);
+	follow = Follower(120, vector2(700, 700), vector2(0, 0), vector2(6, 6), 8, 2.5f, 10.0f, 20, 20);
 	
 	walls.push_back(&wall);
 	walls.push_back(&wall1);

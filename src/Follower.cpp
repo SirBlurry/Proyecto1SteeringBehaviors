@@ -12,11 +12,14 @@ void Follower::manager(Agent*agent, list<Obstacle*>& obstacles)
 			|| this->radar->detect(ob->getLeft(), ob->height / 4)
 			|| this->radar->detect(ob->getRight(), ob->height / 4))
 		{
-			Agent::sb->wallAvoidance(this, ob);
-			return;
+			//Agent::sb->wallAvoidance(this, ob);
+			Agent::sb->Hide(this, ob, agent);
+			//return;
 		}
 	}
-	sb->seek(this, agent->position);
+			sb->Evade(this, agent);
+	//sb->seek(this, agent->position);
+
 	Agent::doIt = Agent::limits();
 }
 

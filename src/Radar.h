@@ -2,6 +2,7 @@
 #include"vector2.h"
 #include<list>
 #include<ofGraphics.h>
+#include "Obstacle.h"
 
 using std::list;
 
@@ -18,4 +19,5 @@ public:
 	Radar(vector2 owner, float rad) : center(owner), radius(rad) {}
 	bool detect(vector2, float);
 	void drawRadar();
+	bool CollisionObj(Obstacle* obstacle);
 };

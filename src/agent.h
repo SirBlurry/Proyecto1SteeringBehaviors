@@ -32,9 +32,11 @@ class Agent : public Obstacle
 				void wallAvoidance(Agent*, Obstacle*);
 				void pathFollowing(Agent*, list<vector2>*);
 				void OffsetPursuit(Agent*, float, Agent*);
-				void Hide(Agent*, list<Obstacle*>&, Agent*);
+				vector2 GetHidingPosition(Obstacle*, Agent*, Agent*);
+				void Hide(Agent*, Obstacle* , Agent*);
 				void Evade(Agent*, Agent*);
 				void Pursuit(Agent*, Agent*);
+				vector2 CollisionPoint(Obstacle* , Agent* );
 		};
 	protected:
 		bool doIt = false;

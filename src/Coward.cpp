@@ -20,6 +20,7 @@ void Coward::manager(list<Agent*>& agents, list<Obstacle*>& obstacles, time_t* d
 		}
 		for (Agent* ag : agents)
 		{
+
 			if ((ag != this) && (this->radar->detect(ag->position, ag->lenght)
 				|| this->radar->detect(ag->getP0(), ag->lenght)
 				|| this->radar->detect(ag->getP1(), ag->lenght)
